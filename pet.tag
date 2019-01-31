@@ -28,45 +28,66 @@
 
 
   <script>
-    this.hunger = 0;
+    this.hunger = 10;
     this.happiness = 50;
     this.petImage = "neutral";
 
 
+// functions that change status
     incHunger() {
-      if (this.hunger >= 80)
-        this.petImage = "hunger";
-        this.happiness = 0;
-      this.hunger += 20;
-      return true;
+      this.hunger = this.hunger + 20 > 100 ? 100 : this.hunger + 20;
     }
 
     decHunger() {
-      if (this.hunger <= 60)
-        this.petImage = "neutral";
-      this.hunger -= 20;
-      return true;
+      this.hunger = this.hunger - 20 < 0 ? 0 : this.hunger - 20;
     }
 
     incHappiness() {
       this.happiness = this.happiness + 20 > 100 ? 100 : this.happiness + 20;
-      return true;
     }
+
     decHappiness() {
       this.happiness = this.happiness - 20 < 0 ? 0 : this.happiness - 20;
-      return true;
     }
 
+// check status
+    checkStatus() {
+      if (this.hunger == 0){
+        this.petImage = "dead";
+      } else if (0 < this.hunger <= 50) {
+        if (this.happiness == 0){
+          this.petImage = "dead";
+        } else if (0 < this.hunger <= 50) {
+          this.petImage = "neutral";
+        } else {
+          this.petImage = "happy";
+        }
+      } else {
+        if (this.happiness == 0){
+          this.petImage = "dead";
+        } else if (0 < this.hunger <= 50) {
+          this.petImage = "hunger";
+        } else {
+          this.petImage = "unhappy";
+        }
+      }
+    }
 
+// functions that respond to events
     feed(e) {
       this.decHunger();
+      this.checkStatus();
     }
+
     play(e) {
-      this.incHunger() && this.incHappiness();
+      this.incHunger();
+      this.incHappiness();
+      this.checkStatus();
     }
     ignore(e) {
       this.incHunger();
       this.decHappiness();
+      this.checkStatus();
     }
   </script>
 
