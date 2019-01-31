@@ -25,48 +25,50 @@
   <button onclick={ ignore }>Ignore</button>
 
 
-
-
   <script>
-    this.hunger = 0;
+    this.hunger = 50;
     this.happiness = 50;
     this.petImage = "neutral";
 
-
     incHunger() {
-      if (this.hunger >= 80)
-        this.petImage = "hunger";
-        this.happiness = 0;
-      this.hunger += 20;
-      return true;
+        if(this.hunger < 100){
+          this.hunger += 20;
+        }
     }
 
     decHunger() {
-      if (this.hunger <= 60)
-        this.petImage = "neutral";
-      this.hunger -= 20;
-      return true;
+        if(this.hunger>=0){
+          this.hunger -= 20;
+        }
     }
 
     incHappiness() {
       this.happiness = this.happiness + 20 > 100 ? 100 : this.happiness + 20;
-      return true;
-    }
-    decHappiness() {
-      this.happiness = this.happiness - 20 < 0 ? 0 : this.happiness - 20;
-      return true;
     }
 
+    decHappiness() {
+      this.happiness = this.happiness - 20 < 0 ? 0 : this.happiness - 20;
+    }
+
+    checkState(){
+
+    }
 
     feed(e) {
       this.decHunger();
+      checkState();
     }
+
     play(e) {
-      this.incHunger() && this.incHappiness();
+      this.incHunger();
+      this.incHappiness();
+      checkState();
     }
+
     ignore(e) {
       this.incHunger();
       this.decHappiness();
+      checkState();
     }
   </script>
 
