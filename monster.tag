@@ -1,14 +1,9 @@
 <monster>
   <img src="img/{ petImage }.gif">
 
-
   <div>
-    <div class="bar hunger">
-      <div style="width:{ hunger }%;">&nbsp;</div>
-    </div>
     <p>Hunger: { hunger }</p>
   </div>
-
 
   <button onclick={ feed }>Feed</button>
   <button onclick={ unfeed }>Not Feed</button>
@@ -18,23 +13,13 @@
     //make a copy of my pet object and call it that
     var that  = this;
 
-    //initial state
+    //initial state/propoerty
     this.hunger = 50;
     this.petImage = "neutral";
 
-    //tell DOM window to increase hunger every three second
-    //console.log(that);
-    window.setInterval(function(){
-      that.incHunger();
-      console.log("wait");
-      that.update();
-      that.checkStatus();
-      <!-- console.log(this); -->
-    }, 3000);
-
 
     decHunger() {
-
+      <!-- js if statement shorthand -->
       this.hunger = this.hunger - 10 < 0 ? 0 : this.hunger - 10;
     }
 
@@ -54,18 +39,30 @@
     }
 
 // functions that respond to events
-    feed(e) {
+    feed() {
       this.decHunger();
       this.checkStatus();
     }
 
-    unfeed(e) {
+    unfeed() {
       this.incHunger();
       this.checkStatus();
     }
+
+    //tell DOM window to increase hunger every three second
+    //console.log(that);
+
+
+    window.setInterval(function(){
+      that.incHunger();
+      console.log("wait");
+      that.update();
+      that.checkStatus();
+    }, 3000);
   </script>
 
   <style>
+  /* styles that will be applied to the root level of my tag */
   :scope{
     margin:auto;
   }
